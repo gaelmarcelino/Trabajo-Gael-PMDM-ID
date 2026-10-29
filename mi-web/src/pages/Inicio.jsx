@@ -2,7 +2,8 @@ import Cabecera from '../components/Cabecera.jsx'
 import Hero from '../components/Hero.jsx'
 import Convocatorias from '../components/Convocatorias.jsx'
 import Accesos from '../components/Accesos.jsx'
-import Pie from '../components/Pie.jsx'
+
+import './Inicio.css'
 
 function Inicio() {
   return (
@@ -15,7 +16,7 @@ function Inicio() {
         <Accesos />
       </main>
 
-      <Pie />
+      
     </div>
   )
 }
