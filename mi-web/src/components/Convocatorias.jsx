@@ -55,7 +55,7 @@ function Convocatorias() {
 
       {!cargando && !error && convocatorias.length > 0 && (
         <div className="rejilla-convocatorias">
-          {convocatorias.slice(0, 6).map((convocatoria) => (
+          {convocatorias.map((convocatoria) => (
             <article className="tarjeta" key={convocatoria.id}>
               <span className="estado">
                 {convocatoria.estado === 'resuelta'
