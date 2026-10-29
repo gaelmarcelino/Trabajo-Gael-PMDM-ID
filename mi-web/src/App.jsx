@@ -4,6 +4,8 @@ import './App.css'
 import Inicio from './pages/Inicio.jsx'
 import Buscador from './pages/Buscador.jsx'
 import DetalleVivienda from './pages/DetalleVivienda.jsx'
+import Cabecera from './components/Cabecera.jsx'
+import Pie from './components/Pie.jsx'
 
 function NoEncontrada() {
   return (
@@ -18,15 +20,20 @@ function NoEncontrada() {
 function App() {
   return (
     <BrowserRouter>
+      
+
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/viviendas" element={<Buscador />} />
+        <Route path="/solicitud" element={<div>Formulario de solicitud próximamente</div>} />
         <Route
           path="/viviendas/:id"
           element={<DetalleVivienda />}
         />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
+
+      <Pie />
     </BrowserRouter>
   )
 }

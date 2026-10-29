@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 function Cabecera() {
   return (
     <header className="cabecera">
@@ -12,9 +13,9 @@ function Cabecera() {
         <a href="#solicitud">Mi solicitud</a>
       </nav>
 
-      <a className="boton boton-cabecera" href="#buscar">
-        Buscar vivienda
-      </a>
+      <Link className="boton boton-principal" to="/viviendas">
+  Buscar vivienda
+</Link>
     </header>
   )
 }

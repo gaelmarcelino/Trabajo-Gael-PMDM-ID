@@ -16,9 +16,11 @@ function Hero() {
         </p>
 
         <div className="hero-botones">
-          <Link className="boton boton-principal" to="/viviendas">
-            Buscar vivienda <span aria-hidden="true">→</span>
-          </Link>
+          
+<Link to="/viviendas" className="boton boton-principal">
+  Buscar vivienda
+</Link>
+
 
           <a className="boton boton-secundario" href="#convocatorias">
             Ver convocatorias
