@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import '../styles/Buscador.css'
 
+
 const POR_PAGINA = 12
 
 function normalizar(texto) {
@@ -68,7 +69,7 @@ function Buscador() {
     const texto = normalizar(busqueda)
 
     const filtradas = viviendas.filter((vivienda) => {
-      // No mostrar viviendas ya adjudicadas.
+      
       if (vivienda.adjudicada === true) return false
 
       const coincideTexto =
@@ -80,8 +81,7 @@ function Buscador() {
       const coincideProvincia =
         !provincia || vivienda.provincia === provincia
 
-      // Si el dato de accesibilidad falta, no se considera
-      // automáticamente una vivienda no adaptada.
+      
       const valorAccesibilidad = normalizar(vivienda.accesibilidad)
 
       const coincideAccesibilidad =
@@ -151,6 +151,14 @@ function Buscador() {
             para encontrar las que se adapten a tus necesidades.
           </p>
         </div>
+        
+
+
+  
+
+  
+
+
 
         <section className="panel-filtros" aria-label="Filtros de búsqueda">
           <div className="campo-buscador campo-texto">
@@ -343,6 +351,7 @@ function Buscador() {
           </>
         )}
       </main>
+      
     </div>
   )
 }

@@ -66,3 +66,143 @@
   padding: 10px 16px;
   cursor: pointer;
 }
+
+
+/* ===== Buscador Teitos: diseño renovado ===== */
+
+.pagina-buscador {
+  background: #f7f9f7;
+  min-height: 100vh;
+}
+
+.cabecera-buscador {
+  padding: 64px 5% 28px;
+}
+
+.cabecera-buscador h1 {
+  margin: 0 0 16px;
+  color: #17324d;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+}
+
+.cabecera-buscador p {
+  max-width: 720px;
+  color: #536b7e;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* Panel de filtros */
+.panel-filtros {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 28px;
+  margin: 24px 5% 40px;
+  padding: 32px;
+  border: 1px solid #dce7df;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 8px 28px rgb(23 50 77 / 5%);
+}
+
+/* Campos */
+.panel-filtros label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #17324d;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.panel-filtros input,
+.panel-filtros select {
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 1px solid #bdcdc2;
+  border-radius: 10px;
+  background: #fff;
+  color: #17324d;
+  font: inherit;
+  font-weight: 400;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.panel-filtros input:focus-visible,
+.panel-filtros select:focus-visible {
+  outline: 3px solid #a8cdb5;
+  outline-offset: 2px;
+  border-color: #286343;
+}
+
+/* Botones del panel */
+.panel-filtros button {
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid #286343;
+  border-radius: 10px;
+  background: #286343;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.panel-filtros button:hover {
+  background: #1d4f34;
+}
+
+.panel-filtros button:focus-visible {
+  outline: 3px solid #a8cdb5;
+  outline-offset: 3px;
+}
+
+/* Resultados */
+.contenido-buscador {
+  padding: 0 5% 64px;
+}
+
+/* Adaptación a tablets */
+@media (max-width: 800px) {
+  .cabecera-buscador {
+    padding-top: 44px;
+  }
+
+  .panel-filtros {
+    gap: 20px;
+    padding: 24px;
+  }
+}
+
+/* Adaptación a móviles */
+@media (max-width: 600px) {
+  .cabecera-buscador {
+    padding: 36px 5% 16px;
+  }
+
+  .cabecera-buscador h1 {
+    font-size: 36px;
+    letter-spacing: -0.8px;
+  }
+
+  .cabecera-buscador p {
+    font-size: 16px;
+  }
+
+  .panel-filtros {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin: 20px 5% 32px;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .contenido-buscador {
+    padding-bottom: 40px;
+  }
+}
