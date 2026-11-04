@@ -1,33 +1,33 @@
 
+import { Link } from 'react-router'
+
 function Accesos() {
   return (
-    <section className="accesos" aria-label="Accesos rápidos">
-      <a className="acceso" href="#convocatorias">
-        <span className="icono-acceso" aria-hidden="true">⌂</span>
-        <span>
+    <section className="seccion-accesos" aria-label="Accesos rápidos">
+      <h2>¿Qué necesitas hacer?</h2>
+
+      <div className="rejilla-accesos">
+        <Link className="tarjeta-acceso" to="/#convocatorias">
+          <span className="icono-acceso" aria-hidden="true">⌂</span>
           <strong>Convocatorias</strong>
           <small>Consulta las oportunidades disponibles.</small>
-        </span>
-        <span className="flecha" aria-hidden="true">→</span>
-      </a>
+          <span className="enlace-acceso">Ver convocatorias →</span>
+        </Link>
 
-      <a className="acceso" href="#buscar">
-        <span className="icono-acceso" aria-hidden="true">⌕</span>
-        <span>
+        <Link className="tarjeta-acceso" to="/viviendas">
+          <span className="icono-acceso" aria-hidden="true">⌕</span>
           <strong>Buscar vivienda</strong>
           <small>Encuentra una vivienda que se adapte a ti.</small>
-        </span>
-        <span className="flecha" aria-hidden="true">→</span>
-      </a>
+          <span className="enlace-acceso">Buscar vivienda →</span>
+        </Link>
 
-      <a className="acceso" href="#solicitud">
-        <span className="icono-acceso" aria-hidden="true">☷</span>
-        <span>
+        <Link className="tarjeta-acceso" to="/mi-solicitud">
+          <span className="icono-acceso" aria-hidden="true">☷</span>
           <strong>Mi solicitud</strong>
           <small>Consulta información sobre tu solicitud.</small>
-        </span>
-        <span className="flecha" aria-hidden="true">→</span>
-      </a>
+          <span className="enlace-acceso">Consultar solicitud →</span>
+        </Link>
+      </div>
     </section>
   )
 }
