@@ -25,3 +25,12 @@ export async function obtenerVivienda(id) {
 
   return await respuesta.json()
 }
+export async function obtenerConvocatorias() {
+  const respuesta = await fetch(`${API_URL}/convocatorias`)
+
+  if (!respuesta.ok) {
+    throw new Error('No se pudieron obtener las convocatorias')
+  }
+
+  return await respuesta.json()
+}

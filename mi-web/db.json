@@ -21781,24 +21781,19 @@
   ],
   "solicitudes": [
     {
-      "nombre": "gael",
-      "apellidos": "marcelino",
-      "email": "gael.marcelinodocio@campuspolitecnicoaceimar.com",
-      "telefono": "6384394023",
+      "nombre": "pepe",
+      "apellidos": "martinez",
+      "documento": "834934034",
+      "email": "pepemartinez@gmail.com",
+      "telefono": "9402024034",
       "personas": 1,
-      "ingresos": 10000,
-      "viviendaId": "3",
-      "id": "iCWUs5hQu-s"
-    },
-    {
-      "nombre": "gael",
-      "apellidos": "marcelino",
-      "email": "gaelmarcelinodocio7@gmail.com",
-      "telefono": "32848249249",
-      "personas": 1,
-      "ingresos": 10000,
-      "viviendaId": "3",
-      "id": "pkJ0O1FZzQs"
+      "ingresos": 25000,
+      "viviendaId": "6",
+      "convocatoriaId": 10,
+      "viviendas": [
+        "6"
+      ],
+      "id": "YLd0zwHmGdA"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
