@@ -1,26 +1,11 @@
-
-import { useEffect, useState } from 'react'
+import { useConvocatorias } from "../../hooks/useConvocatorias";
 
 function Convocatorias() {
-  const [convocatorias, setConvocatorias] = useState([])
-  const [cargando, setCargando] = useState(true)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    fetch('http://localhost:3001/convocatorias')
-      .then((respuesta) => {
-        if (!respuesta.ok) {
-          throw new Error('No se pudieron cargar las convocatorias')
-        }
-        return respuesta.json()
-      })
-      .then((datos) => {
-        setConvocatorias(datos)
-        setError(false)
-      })
-      .catch(() => setError(true))
-      .finally(() => setCargando(false))
-  }, [])
+  const {
+    convocatorias,
+    loading,
+    error
+  } = useConvocatorias()
 
   return (
     <section className="seccion-convocatorias" id="convocatorias">
@@ -36,7 +21,7 @@ function Convocatorias() {
         </span>
       </div>
 
-      {cargando && (
+      {loading && (
         <p className="mensaje" role="status">
           Cargando convocatorias...
         </p>
@@ -49,11 +34,13 @@ function Convocatorias() {
         </p>
       )}
 
-      {!cargando && !error && convocatorias.length === 0 && (
-        <p className="mensaje">No hay convocatorias disponibles.</p>
+      {!loading && !error && convocatorias.length === 0 && (
+        <p className="mensaje">
+          No hay convocatorias disponibles.
+        </p>
       )}
 
-      {!cargando && !error && convocatorias.length > 0 && (
+      {!loading && !error && convocatorias.length > 0 && (
         <div className="rejilla-convocatorias">
           {convocatorias.map((convocatoria) => (
             <article className="tarjeta" key={convocatoria.id}>

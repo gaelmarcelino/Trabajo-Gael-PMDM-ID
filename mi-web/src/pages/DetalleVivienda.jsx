@@ -198,6 +198,12 @@ function DetalleVivienda() {
             Ver otras viviendas
           </Link>
         </div>
+        <Link
+        className="detalle-boton-secundario"
+        to={`/solicitud?vivienda=${vivienda.id}`}
+      >
+      Solicitar esta vivienda
+        </Link>
       </main>
 
       <footer className="detalle-pie">
