@@ -2,10 +2,30 @@
 import { useState } from 'react'
 import { useSearchParams, Link } from 'react-router'
 import './Solicitud.css'
+import { useSolicitud } from '../../hooks/useSolicitud'
 
 function Solicitud() {
+  const { enviarSolicitud, cargando, error } = useSolicitud()
   const [parametros] = useSearchParams()
   const viviendaId = parametros.get('vivienda')
+  async function guardarDatos() {
+  const nuevaSolicitud = {
+    nombre: datos.nombre,
+    apellidos: datos.apellidos,
+    documento: datos.documento,
+    email: datos.email,
+    telefono: datos.telefono,
+    personas: Number(datos.personas),
+    ingresos: Number(datos.ingresos),
+    viviendaId: viviendaId
+  }
+
+  const resultado = await enviarSolicitud(nuevaSolicitud)
+
+  if (resultado) {
+    alert('Solicitud guardada correctamente')
+  }
+}
 
   const [paso, setPaso] = useState(1)
   const [datos, setDatos] = useState({
@@ -103,9 +123,18 @@ function Solicitud() {
           <p>Ingresos anuales: {datos.ingresos} €</p>
 
           <button type="button" onClick={() => setRevision(false)}>
-            Volver a editar
+          Volver a editar
           </button>
-          <p>La conexión para enviar y guardar la solicitud la añadiremos después.</p>
+
+<button
+  type="button"
+  onClick={guardarDatos}
+  disabled={cargando}
+>
+  {cargando ? 'Guardando...' : 'Confirmar y guardar solicitud'}
+</button>
+
+{error && <p role="alert">{error}</p>}
         </section>
       </main>
     )
