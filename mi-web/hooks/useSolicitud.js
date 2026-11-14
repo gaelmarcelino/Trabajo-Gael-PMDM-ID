@@ -16,16 +16,34 @@ export function useSolicitud() {
     setError(null)
 
     try {
-      const vivienda = await obtenerVivienda(datos.viviendaId)
+      // Obtener las viviendas seleccionadas
+      const ids = datos.viviendas
+
+      if (!Array.isArray(ids) || ids.length === 0) {
+        throw new Error('Debes seleccionar al menos una vivienda')
+      }
+
+      // Evitar viviendas repetidas
+      const idsTexto = ids.map(id => String(id))
+
+      if (new Set(idsTexto).size !== idsTexto.length) {
+        throw new Error('No puedes seleccionar viviendas repetidas')
+      }
+
+      // Consultar cada vivienda en la API
+      const viviendas = await Promise.all(
+        idsTexto.map(id => obtenerVivienda(id))
+      )
+
+      // La primera vivienda determina la convocatoria
+      const convocatoriaId = viviendas[0].convocatoriaId
+
+      // Consultar las convocatorias
       const convocatorias = await obtenerConvocatorias()
 
       const convocatoria = convocatorias.find(
-        c => String(c.id) === String(vivienda.convocatoriaId)
+        c => String(c.id) === String(convocatoriaId)
       )
-
-      if (vivienda.adjudicada) {
-        throw new Error('Esta vivienda ya está adjudicada')
-      }
 
       if (!convocatoria) {
         throw new Error('No se encontró la convocatoria')
@@ -35,22 +53,41 @@ export function useSolicitud() {
         throw new Error('La convocatoria no está abierta')
       }
 
-      const cumpleAcceso = cumpleRequisitosAcceso({
-        ingresosAnuales: datos.ingresos,
-        personas: datos.personas,
-        rentaMensual: vivienda.renta
-      })
+      // Comprobar todas las viviendas
+      for (const vivienda of viviendas) {
 
-      if (!cumpleAcceso) {
-        throw new Error(
-          'No cumples los requisitos económicos para solicitar esta vivienda'
-        )
+        if (String(vivienda.convocatoriaId) !== String(convocatoriaId)) {
+          throw new Error(
+            'Todas las viviendas deben pertenecer a la misma convocatoria'
+          )
+        }
+
+        if (vivienda.adjudicada) {
+          throw new Error(
+            'La vivienda ' + vivienda.id + ' ya está adjudicada'
+          )
+        }
+
+        const cumpleAcceso = cumpleRequisitosAcceso({
+          ingresosAnuales: datos.ingresos,
+          personas: datos.personas,
+          rentaMensual: vivienda.renta
+        })
+
+        if (!cumpleAcceso) {
+          throw new Error(
+            'No cumples los requisitos económicos para la vivienda ' +
+            vivienda.id
+          )
+        }
       }
 
+      // Guardar todas las viviendas en el orden elegido
       const solicitudCompleta = {
         ...datos,
-        convocatoriaId: vivienda.convocatoriaId,
-        viviendas: [String(vivienda.id)]
+        viviendaId: idsTexto[0],
+        convocatoriaId: convocatoriaId,
+        viviendas: idsTexto
       }
 
       const resultado = await guardarSolicitud(solicitudCompleta)
@@ -68,4 +105,5 @@ export function useSolicitud() {
 
   return { enviarSolicitud, cargando, error }
 }
+
 

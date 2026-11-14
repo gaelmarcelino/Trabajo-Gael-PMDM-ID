@@ -34,3 +34,14 @@ export async function obtenerConvocatorias() {
 
   return await respuesta.json()
 }
+
+export async function obtenerViviendas() {
+  const respuesta = await fetch(`${API_URL}/viviendas`)
+
+  if (!respuesta.ok) {
+    throw new Error('No se pudieron obtener las viviendas')
+  }
+
+  return await respuesta.json()
+}
+
