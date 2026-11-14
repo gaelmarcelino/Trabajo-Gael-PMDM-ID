@@ -8,7 +8,7 @@ import DetalleVivienda from './pages/DetalleVivienda.jsx'
 import Pie from './components/Pie.jsx'
 import Solicitud from './pages/Solicitud.jsx'
 import MiSolicitud from './pages/MiSolicitud.jsx'
-
+import { SolicitudProvider } from './context/SolicitudContext.jsx'
 function NoEncontrada() {
   return (
     <main style={{ padding: '48px 5%', color: '#17324d' }}>
@@ -21,24 +21,20 @@ function NoEncontrada() {
 
 function App() {
   return (
+  <SolicitudProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/viviendas" element={<Buscador />} />
         <Route path="/solicitud" element={<Solicitud />} />
         <Route path="/mi-solicitud" element={<MiSolicitud />} />
-
-        <Route
-          path="/viviendas/:id"
-          element={<DetalleVivienda />}
-        />
-
+        <Route path="/viviendas/:id" element={<DetalleVivienda />} />
         <Route path="*" element={<NoEncontrada />} />
       </Routes>
-
       <Pie />
     </BrowserRouter>
-  )
+  </SolicitudProvider>
+)
 }
 
 export default App

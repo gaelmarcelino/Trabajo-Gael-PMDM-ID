@@ -4,28 +4,27 @@ import { useSearchParams, Link } from 'react-router'
 import './Solicitud.css'
 import { useSolicitud } from '../../hooks/useSolicitud'
 import { obtenerVivienda, obtenerViviendas, obtenerConvocatorias } from '../../api/solicitudes'
+import { useBorradorSolicitud } from '../context/SolicitudContext.jsx'
 
 function Solicitud() {
   const { enviarSolicitud, cargando, error } = useSolicitud()
   const [parametros] = useSearchParams()
   const viviendaId = parametros.get('vivienda')
+  const { estado, dispatch } = useBorradorSolicitud()
+  const paso = estado.paso
+  const datos = estado.datos
+  const viviendasSeleccionadas = estado.viviendas
+  const setPaso = paso => dispatch({ type: 'CAMBIAR_PASO', paso })
+  const setViviendasSeleccionadas = actualizar => {
+    const viviendas = typeof actualizar === 'function' ? actualizar(estado.viviendas) : actualizar
+    dispatch({ type: 'CAMBIAR_VIVIENDAS', viviendas })
+  }
 
-  const [paso, setPaso] = useState(1)
   const [revision, setRevision] = useState(false)
   const [errores, setErrores] = useState({})
 
-  const [datos, setDatos] = useState({
-    nombre: '',
-    apellidos: '',
-    documento: '',
-    email: '',
-    telefono: '',
-    personas: '1',
-    ingresos: ''
-  })
 
   const [viviendasDisponibles, setViviendasDisponibles] = useState([])
-  const [viviendasSeleccionadas, setViviendasSeleccionadas] = useState([])
   const [cargandoViviendas, setCargandoViviendas] = useState(true)
   const [errorViviendas, setErrorViviendas] = useState('')
 
@@ -36,7 +35,6 @@ function Solicitud() {
       setCargandoViviendas(true)
       setErrorViviendas('')
       setViviendasDisponibles([])
-      setViviendasSeleccionadas([])
 
       try {
         if (!viviendaId) {
@@ -70,7 +68,17 @@ function Solicitud() {
 
         if (!cancelado) {
           setViviendasDisponibles(disponibles)
-          setViviendasSeleccionadas([String(viviendaActual.id)])
+          // Mantener preferencias si pertenecen a la misma convocatoria.
+          // Si se inicia desde otra convocatoria, comenzar una selección nueva.
+          const anteriores = String(estado.convocatoriaId) === String(viviendaActual.convocatoriaId)
+            ? estado.viviendas.filter(id => disponibles.some(v => String(v.id) === id))
+            : []
+          const inicial = String(viviendaActual.id)
+          dispatch({
+            type: 'SINCRONIZAR_VIVIENDAS',
+            convocatoriaId: String(viviendaActual.convocatoriaId),
+            viviendas: anteriores.includes(inicial) ? anteriores : [inicial, ...anteriores]
+          })
         }
       } catch (error) {
         if (!cancelado) {
@@ -93,10 +101,7 @@ function Solicitud() {
   function actualizarCampo(evento) {
     const { name, value } = evento.target
 
-    setDatos(anteriores => ({
-      ...anteriores,
-      [name]: value
-    }))
+    dispatch({ type: 'CAMBIAR_CAMPO', campo: name, valor: value })
   }
 
   function agregarVivienda(id) {
@@ -235,7 +240,9 @@ function Solicitud() {
     const resultado = await enviarSolicitud(nuevaSolicitud)
 
     if (resultado) {
-      alert('Solicitud guardada correctamente')
+      dispatch({ type: 'LIMPIAR' })
+      try { localStorage.setItem('teitosSolicitudId', String(resultado.id)) } catch { /* almacenamiento no disponible */ }
+      alert('Solicitud guardada correctamente. ID: ' + resultado.id)
     }
   }
 
