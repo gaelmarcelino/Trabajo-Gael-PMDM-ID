@@ -45,3 +45,41 @@ export async function obtenerViviendas() {
   return await respuesta.json()
 }
 
+export async function obtenerSolicitud(id) {
+  const respuesta = await fetch(`${API_URL}/solicitudes/${id}`)
+
+  if (!respuesta.ok) {
+    throw new Error('No se pudo obtener la solicitud')
+  }
+
+  return await respuesta.json()
+}
+
+export async function modificarSolicitud(id, datos) {
+  const respuesta = await fetch(`${API_URL}/solicitudes/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datos)
+  })
+
+  if (!respuesta.ok) {
+    throw new Error('No se pudo modificar la solicitud')
+  }
+
+  return await respuesta.json()
+}
+
+export async function eliminarSolicitud(id) {
+  const respuesta = await fetch(`${API_URL}/solicitudes/${id}`, {
+    method: 'DELETE'
+  })
+
+  if (!respuesta.ok) {
+    throw new Error('No se pudo eliminar la solicitud')
+  }
+
+  return true
+}
+

@@ -1,13 +1,13 @@
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router'
 import './App.css'
+
 import Inicio from './pages/Inicio.jsx'
 import Buscador from './pages/Buscador.jsx'
 import DetalleVivienda from './pages/DetalleVivienda.jsx'
-import Cabecera from './components/Cabecera.jsx'
 import Pie from './components/Pie.jsx'
 import Solicitud from './pages/Solicitud.jsx'
-
+import MiSolicitud from './pages/MiSolicitud.jsx'
 
 function NoEncontrada() {
   return (
@@ -22,18 +22,18 @@ function NoEncontrada() {
 function App() {
   return (
     <BrowserRouter>
-      
-
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/viviendas" element={<Buscador />} />
-        <Route path="/solicitud" element={<Solicitud/>} />
-        
+        <Route path="/solicitud" element={<Solicitud />} />
+        <Route path="/mi-solicitud" element={<MiSolicitud />} />
+
         <Route
           path="/viviendas/:id"
           element={<DetalleVivienda />}
         />
-        
+
+        <Route path="*" element={<NoEncontrada />} />
       </Routes>
 
       <Pie />
